@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Menu</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/site.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    
+    <link rel="stylesheet" href="../assets/header.css">
+  </head>
+
+  <body>
+    <button class="btn btn-primary toggle-btn" id="toggleSidebar">
+      Toggle Sidebar
+    </button>
+    <div class="sidebar d-flex flex-column p-3 bg-light" id="sidebar">
+      <a href="/" class="d-flex align-items-center mb-3 text-decoration-none">
+        <span class="fs-4 admin-title">Habibi Admin</span>
+      </a>
+      
+      <hr />
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a href="Admin.html" class="nav-link">
+          Users
+        </a>
+      </li>
+      <li>
+        <a href="Menu_Admin.html" class="nav-link" >
+          Menu
+        </a>
+      <a href="authentication.html" class="btn btn-danger btn-block">Logout</a>
+    </ul>
+    <hr />
+    </div>
+
+    <div id="content" class="content container mt-5">
+      <div class="row mb-4">
+        <div class="col">
+          <h1>Manage Menu</h1>
+        </div>
+      </div>
+      <div class="table-responsive" style="max-height: 75vh;">
+        <table class="table table-bordered table-striped table-hover">
+  <thead class="sticky-top bg-light">
+    <tr>
+      <th>Food Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pizza Margherita</td>
+      <td>$8.99</td>
+      <td>Classic pizza with fresh mozzarella, tomatoes, and basil.</td>
+      <td>
+        <button class="btn btn-warning btn-sm edit-button" 
+                data-id="1" 
+                data-name="Pizza Margherita" 
+                data-price="8.99" 
+                data-description="Classic pizza with fresh mozzarella, tomatoes, and basil.">Edit</button>
+        <button class="btn btn-danger btn-sm delete-button" data-id="1">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Cheeseburger</td>
+      <td>$5.49</td>
+      <td>Beef patty with cheese, lettuce, tomato, and special sauce.</td>
+      <td>
+        <button class="btn btn-warning btn-sm edit-button" 
+                data-id="2" 
+                data-name="Cheeseburger" 
+                data-price="5.49" 
+                data-description="Beef patty with cheese, lettuce, tomato, and special sauce.">Edit</button>
+        <button class="btn btn-danger btn-sm delete-button" data-id="2">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Caesar Salad</td>
+      <td>$6.25</td>
+      <td>Romaine lettuce tossed with Caesar dressing and croutons.</td>
+      <td>
+        <button class="btn btn-warning btn-sm edit-button" 
+                data-id="3" 
+                data-name="Caesar Salad" 
+                data-price="6.25" 
+                data-description="Romaine lettuce tossed with Caesar dressing and croutons.">Edit</button>
+        <button class="btn btn-danger btn-sm delete-button" data-id="3">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Grilled Chicken</td>
+      <td>$9.75</td>
+      <td>Marinated chicken breast grilled to perfection with herbs.</td>
+      <td>
+        <button class="btn btn-warning btn-sm edit-button" 
+                data-id="4" 
+                data-name="Grilled Chicken" 
+                data-price="9.75" 
+                data-description="Marinated chicken breast grilled to perfection with herbs.">Edit</button>
+        <button class="btn btn-danger btn-sm delete-button" data-id="4">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Chocolate Cake</td>
+      <td>$4.50</td>
+      <td>Rich chocolate layer cake with fudge frosting.</td>
+      <td>
+        <button class="btn btn-warning btn-sm edit-button" 
+                data-id="5" 
+                data-name="Chocolate Cake" 
+                data-price="4.50" 
+                data-description="Rich chocolate layer cake with fudge frosting.">Edit</button>
+        <button class="btn btn-danger btn-sm delete-button" data-id="5">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="pagination justify-content-center" id="pagination-controls"></ul>
+    </nav>
+
+    <!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="editForm">
+        <div class="modal-body">
+          <input type="hidden" id="editUserId" name="id" />
+          <div class="mb-3">
+            <label for="editFname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="editFname" name="Fname"  />
+            <div class="invalid-feedback" id="fnameError" style="display:none; color: red;">First name is required.</div>
+          </div>
+          <div class="mb-3">
+            <label for="editLname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="editLname" name="Lname"  />
+            <div class="invalid-feedback" id="lnameError" style="display:none; color: red;">Last name is required.</div>
+          </div>
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="text" class="form-control" id="editEmail" name="Email"/>
+            <div class="invalid-feedback" id="emailError" style="display:none; color: red;">Please enter a valid email address.</div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this user?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+  let selectedRow = null;
+
+  // Open edit modal and populate fields
+  document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', function () {
+      selectedRow = this.closest('tr');
+      document.getElementById('editFname').value = selectedRow.cells[0].innerText;
+      document.getElementById('editLname').value = selectedRow.cells[1].innerText;
+      document.getElementById('editEmail').value = selectedRow.cells[2].innerText;
+
+      const modal = new bootstrap.Modal(document.getElementById('editModal'));
+      modal.show();
+    });
+  });
+
+  // Save edited data to table
+  document.getElementById('editForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    selectedRow.cells[0].innerText = document.getElementById('editFname').value;
+    selectedRow.cells[1].innerText = document.getElementById('editLname').value;
+    selectedRow.cells[2].innerText = document.getElementById('editEmail').value;
+
+    bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+  });
+
+  // Open delete confirmation modal
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', function () {
+      selectedRow = this.closest('tr');
+      const modal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+      modal.show();
+    });
+  });
+
+  // Confirm deletion
+  document.getElementById('confirmDelete').addEventListener('click', function () {
+    if (selectedRow) {
+      selectedRow.remove();
+      selectedRow = null;
+    }
+    bootstrap.Modal.getInstance(document.getElementById('deleteConfirmationModal')).hide();
+  });
+</script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
