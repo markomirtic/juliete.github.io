@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  habibi-eats:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: habibi-eats-app
+    ports:
+      - "8080:80"  # Map container port 80 to host port 8080
+    volumes:
+      # Mount the public directory for development (optional)
+      # Uncomment the line below for development with live file changes
+      # - ./public:/var/www/html:ro
+      - ./assets:/var/www/html/assets:ro
+      - ./forms:/var/www/html/forms:ro
+    environment:
+      # PHP configuration
+      - PHP_UPLOAD_MAX_FILESIZE=10M
+      - PHP_POST_MAX_SIZE=10M
+      - PHP_MAX_EXECUTION_TIME=60
+      # Email configuration (customize as needed)
+      - RECEIVING_EMAIL=contact@example.com
+      - SMTP_HOST=
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
+      - SMTP_PORT=587
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "com.habibi-eats.description=Habibi Eats Food Delivery Website"
+      - "com.habibi-eats.version=1.0"
+
+  # Optional: Add a database service if needed for future features
+  # database:
+  #   image: mysql:8.0
+  #   container_name: habibi-eats-db
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: rootpassword
+  #     MYSQL_DATABASE: habibi_eats
+  #     MYSQL_USER: habibi_user
+  #     MYSQL_PASSWORD: habibi_password
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   restart: unless-stopped
+
+# Optional: Define volumes for persistent data
+# volumes:
+#   mysql_data:
+
+# Optional: Create a custom network
+networks:
+  default:
+    name: habibi-eats-network
